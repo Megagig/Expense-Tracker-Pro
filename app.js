@@ -2,6 +2,7 @@ require('express-async-errors');
 const express = require('express');
 const errorHandler = require('./handlers/errorHandler');
 const mongoose = require('mongoose');
+const userRoutes = require('./modules/users/routes/users.routes');
 require('dotenv').config();
 const app = express();
 
@@ -14,9 +15,15 @@ mongoose
   .catch((err) => {
     console.log('Error connecting to the database', err);
   });
-// Middleware
 
+// Models initialization
+require('./models/users.model');
+
+// Middleware to parse JSON reques
 app.use(express.json());
+
+// Routes
+app.use('/api/v1/users', userRoutes);
 
 // At the end of all routes...
 app.use(errorHandler);
