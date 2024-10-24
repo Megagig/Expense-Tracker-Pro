@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
   const usersModel = mongoose.model('users');
@@ -13,17 +14,20 @@ const register = async (req, res) => {
     throw 'Password and confirm password must match';
   if (password.length < 6) throw 'Password must be at least 6 characters';
 
-  //validation for dupb
+  //validation for duplicate email.
   const getDuplicateEmail = await usersModel.findOne({
     email: email,
   });
 
   if (getDuplicateEmail) throw 'This Email Already Exists';
 
+  //hashing password
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   await usersModel.create({
     name: name,
     email: email,
-    password: password,
+    password: hashedPassword,
     balance: balance,
   });
 
