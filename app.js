@@ -19,6 +19,7 @@ mongoose
 // Models initialization
 require('./models/users.model');
 
+
 // Middleware to parse JSON reques
 app.use(express.json());
 
