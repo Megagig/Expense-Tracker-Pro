@@ -26,7 +26,6 @@ const login = async (req, res) => {
       id: getUser._id,
       name: getUser.name,
     },
-    'JWT_SECRET',
     process.env.jwt_salt,
     {
       expiresIn: '1d',

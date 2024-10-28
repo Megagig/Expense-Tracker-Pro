@@ -1,7 +1,22 @@
-const auth = (req, res, next) => {
-  console.log('Hello from Middleware');
+const jsonwebtoken = require('jsonwebtoken');
 
-  // For now, we'll pass the request to the next function
+const auth = (req, res, next) => {
+  //   console.log(req.headers);
+
+  try {
+    const accessToken = req.headers.authorization.replace('Bearer ', '');
+
+    const jwt_payload = jsonwebtoken.verify(accessToken, process.env.jwt_salt);
+
+    req.user = jwt_payload;
+  } catch (e) {
+    res.status(401).json({
+      status: 'failed',
+      message: 'Unauthorized!',
+    });
+    return;
+  }
+
   next();
 };
 
