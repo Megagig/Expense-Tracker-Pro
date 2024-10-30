@@ -18,6 +18,7 @@ mongoose
 
 // Models initialization
 require('./models/users.model');
+require('./models/transactions.model');
 
 
 // Middleware to parse JSON reques
