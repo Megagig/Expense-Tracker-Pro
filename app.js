@@ -3,6 +3,7 @@ const express = require('express');
 const errorHandler = require('./handlers/errorHandler');
 const mongoose = require('mongoose');
 const userRoutes = require('./modules/users/routes/users.routes');
+const transactionRoutes = require('./modules/users/routes/transactions.routes');
 require('dotenv').config();
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/transactions', transactionRoutes);
 
 // At the end of all routes...
 app.use(errorHandler);
@@ -33,3 +35,4 @@ app.use(errorHandler);
 app.listen(8000, () => {
   console.log('Server is running on port 8000');
 });
+
