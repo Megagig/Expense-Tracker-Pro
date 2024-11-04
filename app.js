@@ -3,7 +3,7 @@ const express = require('express');
 const errorHandler = require('./handlers/errorHandler');
 const mongoose = require('mongoose');
 const userRoutes = require('./modules/users/routes/users.routes');
-const transactionRoutes = require('./modules/users/routes/transactions.routes');
+const transactionRoutes = require('./modules/transactions/transactionRoutes/transactions.routes');
 require('dotenv').config();
 const app = express();
 
@@ -21,7 +21,6 @@ mongoose
 require('./models/users.model');
 require('./models/transactions.model');
 
-
 // Middleware to parse JSON reques
 app.use(express.json());
 
@@ -35,4 +34,3 @@ app.use(errorHandler);
 app.listen(8000, () => {
   console.log('Server is running on port 8000');
 });
-
