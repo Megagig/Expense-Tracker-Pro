@@ -6,7 +6,7 @@ const addIncome = async (req, res) => {
     //Import Models:
     const usersModel = mongoose.model('users');
     const transactionsModel = mongoose.model('transactions');
-
+    // destructure the payload
     const { amount, remarks } = req.body;
     if (!amount) throw 'Amount is required';
     if (!remarks) throw 'Remarks is required';
