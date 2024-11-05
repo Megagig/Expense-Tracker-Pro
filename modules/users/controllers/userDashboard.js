@@ -3,7 +3,7 @@ const userDashboard = async (req, res) => {
   // Import User model from models folder
   const usersModel = mongoose.model('users');
   const transactionsModel = mongoose.model('transactions');
-  console.log(req.user);
+
   //Get the user ID from req.user, set by the auth middleware
   // Query the database to find the user with the ID
   const getUser = await usersModel
