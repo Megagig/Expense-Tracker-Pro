@@ -29,6 +29,13 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 
 // At the end of all routes...
+app.all('*', (req, res) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server!`,
+    });
+}
+);
 app.use(errorHandler);
 
 app.listen(8000, () => {
