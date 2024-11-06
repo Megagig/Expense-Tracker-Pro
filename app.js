@@ -1,11 +1,13 @@
 require('express-async-errors');
 const express = require('express');
+const cors = require('cors');
 const errorHandler = require('./handlers/errorHandler');
 const mongoose = require('mongoose');
 const userRoutes = require('./modules/users/routes/users.routes');
 const transactionRoutes = require('./modules/transactions/transactionRoutes/transactions.routes');
 require('dotenv').config();
 const app = express();
+app.use(cors());
 
 // Connect to the Database
 mongoose
