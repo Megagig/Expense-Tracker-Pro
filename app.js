@@ -1,11 +1,43 @@
 require('express-async-errors');
 const express = require('express');
+const cors = require('cors');
 const errorHandler = require('./handlers/errorHandler');
+const mongoose = require('mongoose');
+const userRoutes = require('./modules/users/routes/users.routes');
+const transactionRoutes = require('./modules/transactions/transactionRoutes/transactions.routes');
+require('dotenv').config();
 const app = express();
+app.use(cors());
 
+// Connect to the Database
+mongoose
+  .connect(process.env.MONGODB_URI, {})
+  .then(() => {
+    console.log('Connected to the database');
+  })
+  .catch((err) => {
+    console.log('Error connecting to the database', err);
+  });
+
+// Models initialization
+require('./models/users.model');
+require('./models/transactions.model');
+
+// Middleware to parse JSON reques
 app.use(express.json());
 
+// Routes
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/transactions', transactionRoutes);
+
 // At the end of all routes...
+app.all('*', (req, res) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server!`,
+    });
+}
+);
 app.use(errorHandler);
 
 app.listen(8000, () => {
