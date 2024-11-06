@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const emailManager = require("../../../managers/emailManager");
 const resetPassword = async (req, res) => {
 	const usersModel = mongoose.model('users');
 	
@@ -33,6 +34,14 @@ const resetPassword = async (req, res) => {
 	},{
 		runValidators: true
 		});
+	
+	//send email
+	await emailManager(
+		email,
+		"Your password has been reset successfully, if you did not perform this action, please contact us immediately",
+		"Your password has been reset successfully, if you did not perform this action, please contact us immediately",
+		"Password reset successfully - Expense tracker PRO"
+	);
 	
 	res.status(200).json({
 		status: 'Password reset successfully'
